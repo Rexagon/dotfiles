@@ -225,7 +225,15 @@ client.unfocused        $darkgray $darkgray $gray $purple $darkgray
 client.urgent           $red $red $white $red $red
 
 # Set monitor positions
-exec_always --no-startup-id xrandr --output DVI-D-0 --primary --mode 1920x1080 --pos 1920x127 --output HDMI-0 --mode 1920x1080 --pos 0x0 && \
+exec_always --no-startup-id xrandr --output DP-0 \
+        --primary \
+	--mode 2560x1440 \
+	--rate 165 \
+	--pos 1920x0 \
+	--output HDMI-0 \
+	--mode 1920x1080 \
+	--rate 60 \
+	--pos 0x0 && \
         feh --bg-fill $wallpaper_left --bg-fill $wallpaper_right
 
 # Set keyboard layouts
