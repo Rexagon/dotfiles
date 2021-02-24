@@ -58,9 +58,9 @@ font-0 = JetBrainsMono:pixelsize=10;3
 font-1 = FontAwesome5Free:style=Regular:size=8:antialias=false;4
 font-2 = siji:pixelsize=10;3
 
-modules-left = pulseaudio
-modules-center = spotify previous playpause next
-modules-right = powermenu
+modules-left = cpu memory filesystem pulseaudio
+modules-center = i3
+modules-right = xkeyboard date
 
 enable-ipc = true
 

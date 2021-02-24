@@ -143,12 +143,15 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
+bindsym $mod+minus sticky toggle
+
 # move container to different monitor
 bindsym $mod+p move workspace to output right
 
 # assign workspaces to monitors
 set $primary "primary"
-set $secondary "HDMI-0"
+#set $secondary "HDMI-0"
+set $primary "primary"
 
 workspace 2 output $secondary	# browser
 workspace 3 output $primary	# IDE
@@ -161,11 +164,13 @@ workspace 0 output $secondary	# spotify
 # assign applications to workspaces
 assign [class="Google-chrome"] $ws2
 assign [class="jetbrains-clion"] $ws3
+assign [class="jetbrains-pycharm-ce"] $ws3
 assign [class="code-oss"] $ws4
 assign [class="GitKraken"] $ws5
 assign [class="TelegramDesktop"] $ws8
 assign [class="discord"] $ws9
 assign [class="Spotify"] $ws10
+assign [class="spotify"] $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -225,16 +230,27 @@ client.unfocused        $darkgray $darkgray $gray $purple $darkgray
 client.urgent           $red $red $white $red $red
 
 # Set monitor positions
-exec_always --no-startup-id xrandr --output DP-0 \
-        --primary \
-	--mode 2560x1440 \
-	--rate 165 \
-	--pos 1920x0 \
+#exec_always --no-startup-id xrandr --output DP-0 \
+#       --primary \
+#       --mode 2560x1440 \   
+#       --rate 165 \
+#       --pos 1920x0 \
+#       --output HDMI-0 \
+#       --mode 1920x1080 \ 
+#       --rate 60 \
+#       --pos 0x0 && \
+#        feh --bg-fill $wallpaper_left --bg-fill $wallpaper_right
+
+exec_always --no-startup-id xrandr \
+	--output DP-0 \
+        	--primary \
+	        --mode 2560x1440 \
+	        --rate 165 \
+        	--pos 0x0 \
 	--output HDMI-0 \
-	--mode 1920x1080 \
-	--rate 60 \
-	--pos 0x0 && \
-        feh --bg-fill $wallpaper_left --bg-fill $wallpaper_right
+		--off \
+	&& \
+        feh --bg-fill $wallpaper_left 
 
 # Set keyboard layouts
 exec_always --no-startup-id setxkbmap -model pc104 -layout us,ru -variant ,, -option grp:alt_shift_toggle
