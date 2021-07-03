@@ -36,6 +36,12 @@ bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
+# Brightness controls
+bindsym XF86KbdBrightnessDown exec --no-startup-id brightnessctl -d 'asus::kbd_backlight' s 1-
+bindsym XF86KbdBrightnessUp exec --no-startup-id brightnessctl -d 'asus::kbd_backlight' s +1
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -d 'amdgpu_bl1' s 10%-
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -d 'amdgpu_bl1' s 10%+
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -239,13 +245,11 @@ client.urgent           $red $red $white $red $red
 #        feh --bg-fill $wallpaper_left --bg-fill $wallpaper_right
 
 exec_always --no-startup-id xrandr \
-	--output DP-0 \
+	--output eDP \
         	--primary \
-	        --mode 2560x1440 \
-	        --rate 165 \
+	        --mode 1920x1080 \
+	        --rate 120 \
         	--pos 0x0 \
-	--output HDMI-0 \
-		--off \
 	&& \
         feh --bg-fill $wallpaper_left 
 
