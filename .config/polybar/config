@@ -1,5 +1,5 @@
 [bar/bar_left]
-monitor = ${env:MONITOR:HDMI-0}
+monitor = ${env:MONITOR:eDP}
 width = 100%
 height = 27
 offset-y = 5
@@ -23,9 +23,9 @@ font-0 = JetBrainsMono:style=Bold:pixelsize=10;3
 font-1 = FontAwesome5Free:style=Regular:size=8:antialias=false;4
 font-2 = siji:pixelsize=10;3
 
-modules-left = cpu memory filesystem
+modules-left = cpu memory filesystem pulseaudio
 modules-center = i3
-modules-right = xkeyboard date
+modules-right = xkeyboard battery date
 
 enable-ipc = true
 
@@ -183,6 +183,86 @@ ramp-coreload-6-foreground = #fb4934
 ramp-coreload-7 = █
 ramp-coreload-7-font = 1
 ramp-coreload-7-foreground = #fb4934
+
+[module/battery]
+type = internal/battery
+
+battery = BAT0
+adapter = AC0
+poll-interval = 5
+
+time-format = %-Hh %Mm
+
+format-charging = <animation-charging> <label-charging>
+format-charging-background = #504945
+format-charging-foreground = #999896
+format-charging-underline = #403a37
+format-charging-overline = #403a37
+format-charging-padding = 2
+label-charging = %percentage%% (%time%)
+label-charging-font = 1
+label-charging-foreground = #999896
+
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-background = #504945
+format-discharging-foreground = #999896
+format-discharging-underline = #403a37
+format-discharging-overline = #403a37
+format-discharging-padding = 2
+label-discharging = %time% (%consumption%W)
+label-discharging-font = 1
+label-discharging-foreground = #999896
+
+ramp-capacity-0 = ▁
+ramp-capacity-0-font = 1
+ramp-capacity-0-foreground = #fb4934
+ramp-capacity-1 = ▂
+ramp-capacity-1-font = 1
+ramp-capacity-1-foreground = #fb4934
+ramp-capacity-2 = ▃
+ramp-capacity-2-font = 1
+ramp-capacity-2-foreground = #fabd2f
+ramp-capacity-3 = ▄
+ramp-capacity-3-font = 1
+ramp-capacity-3-foreground = #fabd2f
+ramp-capacity-4 = ▅
+ramp-capacity-4-font = 1
+ramp-capacity-4-foreground = #b8bb26
+ramp-capacity-5 = ▆
+ramp-capacity-5-font = 1
+ramp-capacity-5-foreground = #b8bb26
+ramp-capacity-6 = ▇
+ramp-capacity-6-font = 1
+ramp-capacity-6-foreground = #999896
+ramp-capacity-7 = █
+ramp-capacity-7-font = 1
+ramp-capacity-7-foreground = #999896
+
+animation-charging-0 = ▁
+animation-charging-0-font = 1
+animation-charging-0-foreground = #fb4934
+animation-charging-1 = ▂
+animation-charging-1-font = 1
+animation-charging-1-foreground = #fb4934
+animation-charging-2 = ▃
+animation-charging-2-font = 1
+animation-charging-2-foreground = #fabd2f
+animation-charging-3 = ▄
+animation-charging-3-font = 1
+animation-charging-3-foreground = #fabd2f
+animation-charging-4 = ▅
+animation-charging-4-font = 1
+animation-charging-4-foreground = #b8bb26
+animation-charging-5 = ▆
+animation-charging-5-font = 1
+animation-charging-5-foreground = #b8bb26
+animation-charging-6 = ▇
+animation-charging-6-font = 1
+animation-charging-6-foreground = #999896
+animation-charging-7 = █
+animation-charging-7-font = 1
+animation-charging-7-foreground = #999896
+animation-charging-framerate = 750
 
 [module/memory]
 type = internal/memory
