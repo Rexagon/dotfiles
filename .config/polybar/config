@@ -369,59 +369,17 @@ menu-2-0-exec = sudo poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
 
-[module/previous]
+[module/vpn-wireguard-wg]
 type = custom/script
-interval = 86400
-format = "%{T3}<label>"
-format-padding = 2
-format-foreground = #719963
-format-underline = #719963
-; Previous song icon
-exec = echo ""
+exec = bash $HOME/.config/polybar/scripts/wireguard.sh --config dexpa
+interval = 5
+click-left = bash $HOME/.config/polybar/scripts/wireguard.sh --config dexpa --toggle &
 
-exec-if = "pgrep spotify"
-line-size = 1
-click-left = playerctl -p spotify previous
-
-[module/next]
-type = custom/script
-interval = 86400
-format = "%{T3}<label>"
-format-padding = 2
-format-foreground = #719963
-format-underline = #719963
-; Next song icon
-exec = echo ""
-
-exec-if = "pgrep spotify"
-line-size = 1
-click-left = playerctl -p spotify next
-
-[module/playpause]
-type = custom/ipc
-format-padding = 2
-format-foreground = #719963
-format-underline = #719963
-; Default (no symbol)
-hook-0 = echo ""
-; Playing (pause symbol)
-hook-1 = echo ""
-; Paused (play symbol)
-hook-2 = echo ""
-initial = 1
-line-size = 1
-click-left = playerctl -p spotify play-pause
-
-[module/spotify]
-type = custom/ipc
-hook-0 = echo ""
-hook-1 = python3 $HOME/.config/polybar/scripts/spotify/spotify_status.py
-initial = 1
-format-padding = 2
-format-foreground = #719963
-format-underline = #719963
-line-size = 1
-click-left = i3-msg '[class="Spotify"] focus'
+label-background = #504945  
+label-foreground = #999896
+label-underline = #403a37
+label-overline = #403a37
+label-padding = 2
 
 [settings]
 throttle-ms = 50
