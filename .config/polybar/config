@@ -340,6 +340,32 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = #1d2021
 
+[module/temperature-cpu]
+type = internal/temperature
+interval = 1
+hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input
+warn-temperature = 60
+
+format = <label>
+format-warn = <label-warn>
+label = cpu %temperature-c%
+label-foreground = #999896
+label-warn = cpu %temperature-c%
+label-warn-foreground = #fabd2f
+
+[module/temperature-nvme1]
+type = internal/temperature
+interval = 1
+hwmon-path = /sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/nvme/nvme0/hwmon1/temp1_input
+warn-temperature = 60
+
+format = <label>
+format-warn = <label-warn>
+label = nvme %temperature-c%
+label-foreground = #999896
+label-warn = nvme %temperature-c%
+label-warn-foreground = #fabd2f
+
 [module/powermenu]
 type = custom/menu
 
