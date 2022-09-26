@@ -1,73 +1,51 @@
 #!/bin/bash
 
-function print_help() {
-    printf "USAGE:\n    wireguard.sh [options]\n\n"
-    printf "OPTIONS:\n\n"
-    printf "    --config CONFIG     Wireguard config name\n"
-    printf "    --toggle            Toggle connection\n"
+set -e
+
+green="#b8bb26"
+gray="#999896"
+
+configs_path="/etc/wireguard"
+connected_interface=$(sudo wg show | grep -oP "interface: \K.*" | xargs)
+
+connect() {
+  selected_config=$(find "$configs_path" -name "*.conf" | xargs basename -a -s .conf | rofi -dmenu -p "Wireguard" -config ~/.config/rofi/config-dmenu.rasi)
+  [[ $selected_config ]] && sudo wg-quick up $selected_config
 }
 
-function connection_status() {
-    local connection=$(
-        sudo wg show dexpa 2>/dev/null \
-            | head -n 1 \
-            | awk '{print $NF}'
-	)
-
-    if [[ "$connection" == "$config" ]]; then
-        echo "1"
-    else
-        echo "2"
-    fi
+disconnect() {
+  for connected_config in $(sudo wg show | grep -oP "interface: \K.*"); do
+    sudo wg-quick down $connected_config
+  done
 }
 
-config=""
-toggle="false"
-while [[ $# -gt 0 ]]; do
-	key="$1"
-	case $key in
-		--config)
-			config="$2"
-            shift
-            shift
-            ;;
+toggle() {
+  if [[ $connected_interface ]]; then
+    disconnect
+  else
+    connect
+  fi
+}
 
-        --toggle)
-            toggle="true"
-            shift
-            ;;
+print() {
+  if [[ $connected_interface ]]; then
+    echo "%{u"$green"}%{+u}%{F"$gray"}$connected_interface%{-u}"
+  else
+    echo "%{T3}%{T-}"
+  fi
+}
 
-        --help)
-            printf "Simple script for wg-quick polybar status\n\n"
-            print_help
-            exit 0
-            ;;
-
-        *)
-            printf "error: Found unknown argument\n\n"
-            print_help
-            exit 0
-            ;;
-	esac
-done
-
-if [[ -z "$config" ]]; then
-    echo "error: Config name is required"
-    exit 1
-fi
-
-status="$(connection_status)"
-
-if [[ "$toggle" = "true" ]]; then
-    if [[ "$status" = "1" ]]; then
-        sudo wg-quick down "$config" 2>/dev/null
-    else
-        sudo wg-quick up "$config" 2>/dev/null
-    fi
-else
-    if [[ "$status" = "1" ]]; then
-        echo "VPN: $config"
-    else
-        echo "VPN: off"
-    fi
-fi
+case "$1" in
+  --connect)
+    connect
+    ;;
+  --disconnect)
+    disconnect
+    ;;
+  --toggle)
+    toggle
+    ;;
+  *)
+    print
+    ;;
+esac

@@ -1,5 +1,5 @@
 [bar/bar_left]
-monitor = ${env:MONITOR:eDP}
+;monitor = ${env:MONITOR:eDP}
 width = 100%
 height = 27
 offset-y = 5
@@ -20,12 +20,12 @@ module-margin-left = 0
 module-margin-right = 2
 
 font-0 = JetBrainsMono:style=Bold:pixelsize=10;3
-font-1 = FontAwesome5Free:style=Regular:size=8:antialias=false;4
+font-1 = FontAwesome6Free:style=Regular:size=8:antialias=false;4
 font-2 = siji:pixelsize=10;3
 
 modules-left = cpu memory filesystem pulseaudio
 modules-center = i3
-modules-right = xkeyboard battery date
+modules-right = wireguard xkeyboard battery date
 
 enable-ipc = true
 
@@ -33,7 +33,7 @@ cursor-click = pointer
 cursor-scroll = ns-resize
 
 [bar/bar_right]
-monitor = ${env:MONITOR:DP-0}
+;monitor = ${env:MONITOR:DP-0}
 width = 100%
 height = 27
 offset-y = 5
@@ -60,13 +60,25 @@ font-2 = siji:pixelsize=10;3
 
 modules-left = cpu memory filesystem pulseaudio
 modules-center = i3
-modules-right = xkeyboard date
+modules-right = wireguard xkeyboard date
 
 enable-ipc = true
 
 cursor-click = pointer
 cursor-scroll = ns-resize
 
+[module/wireguard]
+type = custom/script
+exec = bash $HOME/.config/polybar/scripts/wireguard.sh
+tail = false
+interval = 5
+click-left = bash $HOME/.config/polybar/scripts/wireguard.sh --toggle &
+
+label-background = #504945  
+label-foreground = #999896
+label-underline = #403a37
+label-overline = #403a37
+label-padding = 2
 
 [module/xwindow]
 type = internal/xwindow
@@ -340,32 +352,6 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = #1d2021
 
-[module/temperature-cpu]
-type = internal/temperature
-interval = 1
-hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input
-warn-temperature = 60
-
-format = <label>
-format-warn = <label-warn>
-label = cpu %temperature-c%
-label-foreground = #999896
-label-warn = cpu %temperature-c%
-label-warn-foreground = #fabd2f
-
-[module/temperature-nvme1]
-type = internal/temperature
-interval = 1
-hwmon-path = /sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/nvme/nvme0/hwmon1/temp1_input
-warn-temperature = 60
-
-format = <label>
-format-warn = <label-warn>
-label = nvme %temperature-c%
-label-foreground = #999896
-label-warn = nvme %temperature-c%
-label-warn-foreground = #fabd2f
-
 [module/powermenu]
 type = custom/menu
 
@@ -394,18 +380,6 @@ menu-2-0 = power off
 menu-2-0-exec = sudo poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
-
-[module/vpn-wireguard-wg]
-type = custom/script
-exec = bash $HOME/.config/polybar/scripts/wireguard.sh --config dexpa
-interval = 5
-click-left = bash $HOME/.config/polybar/scripts/wireguard.sh --config dexpa --toggle &
-
-label-background = #504945  
-label-foreground = #999896
-label-underline = #403a37
-label-overline = #403a37
-label-padding = 2
 
 [settings]
 throttle-ms = 50

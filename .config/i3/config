@@ -17,7 +17,7 @@ font pango:JetBrainsMono 8
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock-fancy -pf "JetBrains-Mono-Medium" --nofork -- maim -q
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -39,8 +39,8 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 # Brightness controls
 bindsym XF86KbdBrightnessDown exec --no-startup-id brightnessctl -d 'asus::kbd_backlight' s 1-
 bindsym XF86KbdBrightnessUp exec --no-startup-id brightnessctl -d 'asus::kbd_backlight' s +1
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -d 'amdgpu_bl1' s 10%-
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -d 'amdgpu_bl1' s 10%+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -d 'amdgpu_bl0' s 10%-
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -d 'amdgpu_bl0' s 10%+
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -165,15 +165,14 @@ workspace 9 output $secondary	# discord
 workspace 0 output $secondary	# spotify
 
 # assign applications to workspaces
-assign [class="Google-chrome"] $ws2
-assign [class="jetbrains-clion"] $ws3
-assign [class="jetbrains-pycharm-ce"] $ws3
+#assign [class="Google-chrome"] $ws2
+#assign [class="jetbrains-clion"] $ws3
+#assign [class="jetbrains-pycharm-ce"] $ws3
 assign [class="code-oss"] $ws4
 assign [class="GitKraken"] $ws5
 assign [class="TelegramDesktop"] $ws8
 assign [class="discord"] $ws9
-assign [class="Spotify"] $ws10
-assign [class="spotify"] $ws10
+for_window [class="Spotify"] move container to workspace $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -182,7 +181,7 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-bindsym $mod+Shift+x exec i3lock
+bindsym $mod+backslash exec i3lock-fancy -pf "JetBrains-Mono-Medium" --nofork -- maim -q
 
 bindsym $mod+Shift+s exec flameshot gui
 
@@ -244,14 +243,31 @@ client.urgent           $red $red $white $red $red
 #       --pos 0x0 && \
 #        feh --bg-fill $wallpaper_left --bg-fill $wallpaper_right
 
-exec_always --no-startup-id xrandr \
-	--output eDP \
-        	--primary \
-	        --mode 1920x1080 \
-	        --rate 120 \
-        	--pos 0x0 \
-	&& \
-        feh --bg-fill $wallpaper_left 
+#exec_always --no-startup-id autorandr --change \
+#	&& feh --bg-fill $wallpaper_left
+
+#exec_always --no-startup-id xrandr \
+#        --output eDP \
+#        --primary \
+#        --mode 1920x1080 \
+#        --rate 120 \
+#        --pos 0x0 \
+#        && \
+#        feh --bg-fill $wallpaper_left
+
+#exec_always --no-startup-id xrandr \
+#        --output eDP \
+#          --mode 1920x1080 \
+#          --rate 60 \
+#          --pos 0x360 \
+#        --output HDMI-A-0 \
+#          --primary \
+#          --mode 3440x1440 \
+#          --rate 99.98 \
+#          --gamma 1:1:1 \
+#          --pos 1920x0 \
+#        && \
+#        feh --bg-fill $wallpaper_left 
 
 # Set keyboard layouts
 exec_always --no-startup-id setxkbmap -model pc104 -layout us,ru -variant ,, -option grp:alt_shift_toggle
@@ -260,6 +276,7 @@ exec_always --no-startup-id setxkbmap -model pc104 -layout us,ru -variant ,, -op
 exec --no-startup-id fcitx5 -d
 
 # Set wallpapers
+#set $wallpaper_left ~/Pictures/wallpaper/forest.jpg
 set $wallpaper_left ~/Pictures/wallpaper/left-sunset.jpg
 set $wallpaper_right ~/Pictures/wallpaper/right-sunset.jpg
 

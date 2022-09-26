@@ -6,8 +6,9 @@ configuration {
     drun-url-launcher: "xdg-open";
     font: "JetBrainsMono 12";
     show-icons: true;
-    theme: "~/.config/rofi/gruvbox-dark.rasi";
     kb-cancel: "Super+z,Super+d,Escape,Control+g,Control+bracketleft";
     display-drun: "Run";
     display-window: "Window";
 }
+
+@theme "~/.config/rofi/gruvbox-dark.rasi"

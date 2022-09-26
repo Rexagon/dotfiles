@@ -111,36 +111,27 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export PROJECTS_DIR="$HOME/projects"
-export STUFF_DIR="$HOME/Stuff"
-
 cdpr () {
-	cd "$PROJECTS_DIR/$1";
+	cd $HOME/projects/$1;
 }
 
-cdsf () {
-  cd "$STUFF_DIR/$1";
+function ml() {
+	mkdir -p "$(dirname "$1")" && rsync -aP --no-links "$1" "$2" && ln -sf "$2" "$1"
 }
 
-function ml() { 
-	mkdir -p "$(dirname "$1")" && rsync -aP --no-links "$1" "$2" && ln -sf "$2" "$1" 
-}
-
-alias lal='ls -la'
+alias l='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls --tree'
+alias vim='nvim'
 
 source $HOME/.cargo/env
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$STUFF_DIR/google-cloud-sdk/path.zsh.inc" ]; then . "$STUFF_DIR/google-cloud-sdk/path.zsh.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f "$STUFF_DIR/google-cloud-sdk/completion.zsh.inc" ]; then . "$STUFF_DIR/google-cloud-sdk/completion.zsh.inc"; fi
 
 # Improve selection behaviour
 r-delregion() {
   if ((REGION_ACTIVE)) then
     zle kill-region
-  else 
+  else
     local widget_name=$1
     shift
     zle $widget_name -- $@
